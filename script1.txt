@@ -1,0 +1,25 @@
+set numHidden 6
+set numOut 4
+
+addNet keystroke.$numHidden
+addGroup input	17	INPUT
+addGroup hidden $numHidden
+addGroup output $numOut OUTPUT SOFT_MAX MAX_CRIT
+
+connectGroups input hidden
+connectGroups hidden output
+
+setObj learningRate 0.1
+setObj testGroupCrit 0.5
+setObj numUpdates 10
+setObj targetZeroScaling 2.0
+setObj reportInterval 	1
+
+graphObject error
+
+loadExamples wordtraindata.txt -s train
+useTrainingSet train
+loadExamples wordtestdata.txt -s test
+loadExamples wordCVdata.txt -s CV
+loadExamples sentencetestdata.txt -s test-sent
+useTestingSet test
